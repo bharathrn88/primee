@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Prime Video</title>
+</head>
+<style>
+    .body{
+        background-color:#bee0ec;
+        color: #333;
+        font-family: 'Arial', sans-serif;
+    }
+</style>
+<div class="body">
+    <h1 style="text-align: center; color: #333; font-size: 2.5rem; margin-bottom: 2rem;">Movies</h1>
+
+    <!-- Add Movie Form -->
+    <h2 style="text-align: center; color: #007bff; margin-bottom: 1rem;">Add New Movie</h2>
+    <div style="max-width: 600px; margin: 0 auto; background: #ffffff; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); border-radius: 10px; padding: 1rem;">
+        <form id="addMovieForm" action="/submit" method="post">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background-color: #007bff; color: #ffffff;">
+                        <th colspan="2" style="padding: 1rem; text-align: center; border-radius: 10px 10px 0 0; color: black;">Add Movie Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 0.5rem; width: 35%; color: #272429;">Movie ID:</td>
+                        <td style="padding: 0.5rem;"><input type="number" id="movie_id" name="movie_id" required style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; color: #272429;">Type:</td>
+                        <td style="padding: 0.5rem;"><input type="text" id="type" name="type" required style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; color: #272429;">Title:</td>
+                        <td style="padding: 0.5rem;"><input type="text" id="title" name="title" required style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; color: #272429;">Director:</td>
+                        <td style="padding: 0.5rem;"><input type="text" id="director" name="director" required style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; color: #272429;">Cast:</td>
+                        <td style="padding: 0.5rem;"><input type="text" id="cast" name="cast" required style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; color: #272429;">Country:</td>
+                        <td style="padding: 0.5rem;"><input type="text" id="country" name="country" required style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; color: #272429;">Release Date:</td>
+                        <td style="padding: 0.5rem;"><input type="date" id="release_date" name="release_date" style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; color: #272429;">Rating:</td>
+                        <td style="padding: 0.5rem;"><input type="number" step="0.1" id="rating" name="rating" style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; color: #272429;">Duration (minutes):</td>
+                        <td style="padding: 0.5rem;"><input type="number" step="1" id="duration" name="duration" style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; color: #272429;">Listed In:</td>
+                        <td style="padding: 0.5rem;">
+                            <input type="checkbox" id="listed_in" name="listed_in" style="width: 20px; height: 20px; vertical-align: middle;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; color: #272429;">Description:</td>
+                        <td style="padding: 0.5rem;"><textarea id="description" name="description" required style="width: 100%; border: 2px solid #007bff; border-radius: 4px; padding: 0.25rem;"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center; padding: 1rem;">
+                            <button type="submit" style="padding: 0.5rem 1rem; background-color: #007bff; color: #fff; border: none; border-radius: 50px; cursor: pointer; font-size: 0.875rem;">Add Movie</button>
+                            <button type="submit" style="padding: 0.5rem 1rem; background-color: #007bff; color: #fff; border: none; border-radius: 50px; cursor: pointer; font-size: 0.875rem;">
+                                <a href="/">Home</a>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+    <hr style="border-top: 2px solid #007bff; margin: 2rem 0;">
+
+    <!-- Movies Table -->
+    <h2 style="text-align: center; color: #007bff; margin-bottom: 1rem;">Movies List</h2>
+    <div style="overflow-x:auto;">
+        <table border="1" style="width: 100%; border-collapse: collapse; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+            <thead>
+                <tr style="background-color: #007bff; color: #ffffff;">
+                    <th style="padding: 1rem;">Movie ID</th>
+                    <th style="padding: 1rem;">Type</th>
+                    <th style="padding: 1rem;">Title</th>
+                    <th style="padding: 1rem;">Director</th>
+                    <th style="padding: 1rem;">Cast</th>
+                    <th style="padding: 1rem;">Country</th>
+                    <th style="padding: 1rem;">Release Date</th>
+                    <th style="padding: 1rem;">Rating</th>
+                    <th style="padding: 1rem;">Duration</th>
+                    <th style="padding: 1rem;">Description</th>
+                    <th style="padding: 1rem;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for movie in movies %}
+                <tr id="movie-{{ movie.movie_id }}">
+                    <td>{{ movie.movie_id }}</td>
+                    <td>{{ movie.type }}</td>
+                    <td>{{ movie.title }}</td>
+                    <td>{{ movie.director }}</td>
+                    <td>{{ movie.cast }}</td>
+                    <td>{{ movie.country }}</td>
+                    <td>{{ movie.release_date }}</td>
+                    <td>{{ movie.rating or 'N/A' }}</td>
+                    <td>{{ movie.duration }}</td>
+                    <td>{{ movie.description }}</td>
+                    <td>
+                        <button onclick="openEditModal({{ movie.movie_id }})" style="padding: 0.5rem 1rem; background-color: #28a745; color: #fff; border: none;">Edit</button>
+                        <button onclick="deleteMovie({{ movie.movie_id }})" style="padding: 0.5rem 1rem; background-color: #dc3545; color: #fff; border: none;">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Edit Movie Modal -->
+    <div id="editModal" style="display: none;">
+        <h2>Edit Movie</h2>
+        <form id="editMovieForm" onsubmit="updateMovie(); return false;">
+            <input type="hidden" id="edit_movie_id">
+            <label>Type:</label><input type="text" id="edit_type"><br>
+            <label>Title:</label><input type="text" id="edit_title"><br>
+            <label>Director:</label><input type="text" id="edit_director"><br>
+            <label>Cast:</label><input type="text" id="edit_cast"><br>
+            <label>Country:</label><input type="text" id="edit_country"><br>
+            <label>Release Date:</label><input type="date" id="edit_release_date"><br>
+            <label>Rating:</label><input type="number" step="0.1" id="edit_rating"><br>
+            <label>Duration:</label><input type="number" id="edit_duration"><br>
+            <label>Description:</label><textarea id="edit_description"></textarea><br>
+            <button type="submit">Update</button>
+            <button type="button" onclick="closeEditModal()">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<script>
+// Open Edit Modal
+function openEditModal(movieId) {
+    // Populate the modal fields with movie data
+    const movie = movies.find(m => m.movie_id === movieId);  // assuming you have movie data available
+    document.getElementById('editModal').style.display = 'block';
+    document.getElementById('edit_movie_id').value = movie.movie_id;
+    document.getElementById('edit_type').value = movie.type;
+    document.getElementById('edit_title').value = movie.title;
+    document.getElementById('edit_director').value = movie.director;
+    document.getElementById('edit_cast').value = movie.cast;
+    document.getElementById('edit_country').value = movie.country;
+    document.getElementById('edit_release_date').value = movie.release_date;
+    document.getElementById('edit_rating').value = movie.rating;
+    document.getElementById('edit_duration').value = movie.duration;
+    document.getElementById('edit_description').value = movie.description;
+}
+
+// Close Edit Modal
+function closeEditModal() {
+    document.getElementById('editModal').style.display = 'none';
+}
+
+// Update Movie
+function updateMovie() {
+    const movieId = document.getElementById('edit_movie_id').value;
+    const movieData = {
+        type: document.getElementById('edit_type').value,
+        title: document.getElementById('edit_title').value,
+        director: document.getElementById('edit_director').value,
+        cast: document.getElementById('edit_cast').value,
+        country: document.getElementById('edit_country').value,
+        release_date: document.getElementById('edit_release_date').value,
+        rating: document.getElementById('edit_rating').value,
+        duration: document.getElementById('edit_duration').value,
+        description: document.getElementById('edit_description').value
+    };
+
+    fetch(`/update/${movieId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(movieData)
+    }).then(response => {
+        if (response.ok) {
+            alert('Movie updated successfully!');
+            location.reload();
+        } else {
+            alert('Error updating movie');
+        }
+    }).catch(error => {
+        alert('Error:', error);
+    });
+}
+
+// Delete Movie
+function deleteMovie(movieId) {
+    if (confirm('Are you sure you want to delete this movie?')) {
+        fetch(`/delete/${movieId}`, { method: 'DELETE' })
+        .then(response => {
+            if (response.ok) {
+                document.getElementById('movie-' + movieId).remove();
+                alert('Movie deleted successfully!');
+            } else {
+                alert('Error deleting movie');
+            }
+        })
+        .catch(error => {
+            alert('Error:', error);
+        });
+    }
+}
+</script>
+</body>
+</html>

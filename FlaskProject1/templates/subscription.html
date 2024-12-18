@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #232f3e;
+            margin-bottom: 1rem;
+        }
+        .subscription-plan {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .plan {
+            text-align: center;
+            padding: 10px;
+            width: 45%;
+            border-radius: 4px;
+            background-color: #f4f4f9;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .plan:hover {
+            background-color: #f1f1f1;
+        }
+        .plan input[type="radio"] {
+            display: none;
+        }
+        .plan input[type="radio"]:checked + label {
+            background-color: #ff9900;
+            color: white;
+            font-weight: bold;
+        }
+        label {
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .price {
+            display: block;
+            font-size: 16px;
+            margin-top: 5px;
+            color: #0066c0;
+        }
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        input[type="submit"] {
+            background-color: #ff9900;
+            color: white;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            padding: 14px;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #e68900;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+        .footer a {
+            color: #0066c0;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Manage Your Subscription</h2>
+
+    <!-- Subscription Plan Selection -->
+    <div class="subscription-plan">
+        <div class="plan">
+            <input type="radio" id="monthly" name="plan" value="monthly" checked>
+            <label for="monthly">Monthly</label>
+            <span class="price">Rs.179 / month</span>
+        </div>
+        <div class="plan">
+            <input type="radio" id="yearly" name="plan" value="yearly">
+            <label for="yearly">Yearly</label>
+            <span class="price">Rs.1799 / year</span>
+        </div>
+    </div>
+
+    <!-- Subscription Form -->
+    <form action="/subscription" method="POST" id="subscriptionForm">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="card_number">Credit Card Number:</label>
+        <input type="text" id="card_number" name="card_number" required>
+
+        <label for="expiry_date">Expiry Date (MM/YY):</label>
+        <input type="text" id="expiry_date" name="expiry_date" required>
+
+        <label for="cvv">CVV:</label>
+        <input type="text" id="cvv" name="cvv" required>
+
+        <input type="submit" value="Submit Subscription">
+    </form>
+
+    <div class="footer">
+        <p>By submitting, you agree to our <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>.</p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('subscriptionForm').addEventListener('submit', function(e) {
+        var cardNumber = document.getElementById('card_number').value;
+        var cvv = document.getElementById('cvv').value;
+
+        // Simple validation for card number and CVV
+        if (cardNumber.length !== 16) {
+            alert('Card number must be 16 digits');
+            e.preventDefault(); // Prevent form submission
+        }
+
+        if (cvv.length !== 3) {
+            alert('CVV must be 3 digits');
+            e.preventDefault(); // Prevent form submission
+        } else {
+            // If validation is successful, redirect to the home page
+            window.location.href = '/'; // Redirect to the home page
+        }
+    });
+</script>
+
+</body>
+</html>

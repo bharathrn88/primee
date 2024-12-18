@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signin Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f171e;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 50px auto;
+            background-color: #1c2b38;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        label {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 2px solid #00a8e1;
+            border-radius: 4px;
+            background-color: #0f171e;
+            color: white;
+        }
+        button {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            background-color: #00a8e1;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #007f9e;
+        }
+        .action-btns {
+            text-align: center;
+        }
+        .action-btns button {
+            margin-top: 1rem;
+        }
+        .signin-list {
+            margin-top: 2rem;
+        }
+        .signin-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        .signin-list li {
+            display: flex;
+            justify-content: space-between;
+            background-color: #2a3a4b;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .signin-list button {
+            background-color: #d9534f;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Manage Signins</h2>
+
+    <!-- Add/Edit Form -->
+    <div id="formContainer">
+        <form id="signinForm" method="POST" action="{{ url_for('signin') }}">
+    <input type="hidden" id="signin_id" name="signin_id" value="{{ signin_id if signin_id else '' }}">
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" value="{{ email if email else '' }}" required>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" value="{{ password if password else '' }}" required>
+
+    <button type="submit">{{ 'Update' if signin_id else 'Add' }} Signin</button>
+</form>
+
+    </div>
+
+    <!-- Signins List -->
+    <div class="signin-list">
+        <h3>Existing Signins</h3>
+        <ul id="signinList">
+            {% for signin in signins %}
+            <li>
+                <span>{{ signin.email }}</span>
+                <div class="action-btns">
+                    <button onclick="editSignin({{ signin.id }}, '{{ signin.email }}')">Edit</button>
+                    <button onclick="deleteSignin({{ signin.id }})">Delete</button>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<script>
+    // JavaScript for edit form and deletion
+    function editSignin(id, email, password) {
+    document.getElementById('email').value = email;
+    document.getElementById('password').value = password;
+    document.getElementById('signin_id').value = id;
+    document.getElementById('signinForm').action = '/signin';  // Ensure the form action points to '/signin'
+    document.querySelector('button[type="submit"]').textContent = 'Update Signin'; // Change button text
+}
+
+
+    function deleteSignin(id) {
+        if (confirm('Are you sure you want to delete this signin?')) {
+            window.location.href = `/delete_signin/${id}`;
+        }
+    }
+
+</script>
+
+</body>
+</html>
